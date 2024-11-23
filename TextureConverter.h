@@ -7,6 +7,8 @@
 #include<cstdint>
 #include<wrl.h>
 #include <cassert>
+#include"externals/DirectXTex/DirectXTex.h"
+#include"externals/DirectXTex/d3dx12.h"
 
 
 class TextureConverter{
@@ -30,5 +32,32 @@ private:
 	/// <param name="mString">マルチバイト文字列</param>
 	/// <returns>ワイド文字列</returns>
 	static std::wstring ConvertMultiByteStringtoWideString(const std::string& mString);
+
+	/// <summary>
+	/// フォルダとパスとファイル名を分離する
+	/// </summary>
+	/// <param name="filePath"></param>
+	void SeparateFilePath(const std::wstring& filePath);
+
+	/// <summary>
+	/// DDSテクスチャとしてファイルの書き出し
+	/// </summary>
+	void SaveDDSTextureToFile();
+
+private:
+	//画像の情報
+	DirectX::TexMetadata matedata_;
+	//画像イメージのコンテナ
+	DirectX::ScratchImage scrachhImage_;
+
+	//ディレクトリパス
+	std::wstring directoryPath_;
+	//ディレクトリパス
+	std::wstring fileName_;
+	//ディレクトリパス
+	std::wstring fileExt_;
+
+	HRESULT hr_;
+
 };
 
