@@ -9,10 +9,12 @@
 #include <cassert>
 #include"externals/DirectXTex/DirectXTex.h"
 #include"externals/DirectXTex/d3dx12.h"
-
+using namespace DirectX;
 
 class TextureConverter{
 public:
+	
+
 	/// <summary>
 	/// テクスチャをWICからDDSに変換する
 	/// </summary>
@@ -46,7 +48,7 @@ private:
 
 private:
 	//画像の情報
-	DirectX::TexMetadata matedata_;
+	DirectX::TexMetadata metadata_;
 	//画像イメージのコンテナ
 	DirectX::ScratchImage scrachhImage_;
 
