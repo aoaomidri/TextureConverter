@@ -6,27 +6,40 @@
 #include<Windows.h>
 #include<cstdint>
 #include<wrl.h>
+#include<wincodec.h>
+#include <wrl/client.h>  // WIC用のCOMインターフェース管理（必要な場合）
 #include <cassert>
 #include"externals/DirectXTex/DirectXTex.h"
 #include"externals/DirectXTex/d3dx12.h"
+#include<fstream>
+#include<iostream>
+#include<filesystem>
+
+/*画像を変換するコンバーター*/
+
 using namespace DirectX;
 
 class TextureConverter{
 public:
 	
-
 	/// <summary>
-	/// テクスチャをWICからDDSに変換する
+	/// テクスチャをW変換する
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
-	void ConvertTextureWICToDDS(const std::string& filePath);
+	void ConvertTexture(const std::string& filePath, const int number);
 	
 private:
 	/// <summary>
 	/// テクスチャファイル読み込み
 	/// </summary>
 	/// <param name="filePath">ファイルパス</param>
-	void LoadWICTextureFromFile(const std::string& filePath);
+	void LoadWICTextureFromFile(const std::wstring& filePath);
+
+	/// <summary>
+	/// テクスチャファイル読み込み
+	/// </summary>
+	/// <param name="filePath">ファイルパス</param>
+	void LoadDDSTextureFromFile(const std::wstring& filePath);
 
 	/// <summary>
 	/// マルチバイト文字列をワイド文字列に変換
@@ -46,18 +59,27 @@ private:
 	/// </summary>
 	void SaveDDSTextureToFile();
 
+	/// <summary>
+	/// PNGテクスチャとしてファイルの書き出し
+	/// </summary>
+	void SavePNGTextureToFile();
+
 private:
 	//画像の情報
 	DirectX::TexMetadata metadata_;
 	//画像イメージのコンテナ
 	DirectX::ScratchImage scrachhImage_;
 
+	std::wstring fileName_ = L"AfterConversion";
+
+	std::wstring dds_ = L"dds";
+
 	//ディレクトリパス
-	std::wstring directoryPath_;
-	//ディレクトリパス
-	std::wstring fileName_;
-	//ディレクトリパス
-	std::wstring fileExt_;
+	std::wstring directoryPath_ = L"AfterConversion/";
+	//テクスチャ名
+	std::wstring texName_;
+	//テクスチャ拡張子
+	std::wstring texExt_;
 
 	HRESULT hr_;
 
